@@ -1,0 +1,21 @@
+version: '3'
+services:
+  opencv:
+    build:
+      context: .  # Dockerfile 所在目录
+    image: summer/opencv-container
+    container_name: opencv-container
+    environment:
+      - DISPLAY=$DISPLAY # 设置环境变量
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix # 为了支持图形化所做的挂载（这个挂载很重要）
+      - .:/home/summer/opencv # 工作目录挂载(~/dockerlearn/workdir:/home/summer/opencv)
+    network_mode: host
+    pid: "host"      # 添加 pid 命名空间共享
+    ipc: "host"      # 添加 ipc 命名空间共享    
+    privileged: true
+    stdin_open: true
+    tty: true
+    user: "summer"
+    working_dir: "/home/summer/opencv" 
+
